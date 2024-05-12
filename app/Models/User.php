@@ -45,4 +45,24 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the tables associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tables()
+    {
+        return $this->hasMany(\App\Models\Table::class, 'user_id', 'id');
+    }
+
+    /**
+     * Get the shareds associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function shareds()
+    {
+        return $this->hasMany(\App\Models\Shared::class, 'user_id', 'id');
+    }
 }

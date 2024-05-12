@@ -24,12 +24,12 @@ class ExpenseRequest extends FormRequest
         return [
 			'table_id' => 'required',
 			'item' => 'required|string',
-			'description' => 'string',
+			'description' => 'max:255',
 			'date' => 'required',
 			'quantity' => 'required',
 			'price' => 'required',
 			'establishment' => 'string',
-			'category' => 'string',
+			'category' => 'max:100',
 			'type' => 'required',
         ];
     }

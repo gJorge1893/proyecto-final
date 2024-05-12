@@ -57,7 +57,7 @@ class Table extends Model
      */
     public function shareds()
     {
-        return $this->hasMany(\App\Models\Shared::class, 'id', 'table_id');
+        return $this->hasMany(\App\Models\Shared::class, 'table_id', 'id');
     }
     
 }

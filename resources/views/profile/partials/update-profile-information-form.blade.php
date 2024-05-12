@@ -23,31 +23,33 @@
             {!! $errors->first('name', '<span class="invalid-feedback">:message</span>') !!}
         </div>
 
-        <div class="mb-3">
-            <label for="email" class="form-label">{{ __('Email') }}</label>
-            <input id="email" type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $user->email) }}" required autocomplete="username">
-            {!! $errors->first('email', '<span class="invalid-feedback">:message</span>') !!}
+        @if (Auth::user()->password)
+            <div class="mb-3">
+                <label for="email" class="form-label">{{ __('Email') }}</label>
+                <input id="email" type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $user->email) }}" required autocomplete="username">
+                {!! $errors->first('email', '<span class="invalid-feedback">:message</span>') !!}
 
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-muted">
-                        {{ __('Tu dirección de correo electrónico no está verificada.') }}
+                @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
+                    <div>
+                        <p class="text-sm mt-2 text-muted">
+                            {{ __('Tu dirección de correo electrónico no está verificada.') }}
 
-                        <button form="send-verification" class="underline text-sm text-muted hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            {{ __('Haz clic aquí para reenviar el correo electrónico de verificación.') }}
-                        </button>
-                    </p>
-                    </p>
-
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-success">
-                            {{ __('Se ha enviado un nuevo enlace de verificación a tu dirección de correo electrónico.') }}
+                            <button form="send-verification" class="underline text-sm text-muted hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                {{ __('Haz clic aquí para reenviar el correo electrónico de verificación.') }}
+                            </button>
                         </p>
                         </p>
-                    @endif
-                </div>
-            @endif
-        </div>
+
+                        @if (session('status') === 'verification-link-sent')
+                            <p class="mt-2 font-medium text-sm text-success">
+                                {{ __('Se ha enviado un nuevo enlace de verificación a tu dirección de correo electrónico.') }}
+                            </p>
+                            </p>
+                        @endif
+                    </div>
+                @endif
+            </div>
+        @endif
 
         <div class="d-flex align-items-center gap-4 mt-4">
             <button type="submit" class="btn btn-primary">{{ __('Actualizar') }}</button>

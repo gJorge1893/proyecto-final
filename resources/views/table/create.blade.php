@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('template_title')
-    {{ __('Create') }} Table
+@section('title')
+    {{ __('Nueva tabla') }}
 @endsection
 
 @section('content')
@@ -10,12 +10,15 @@
             <div class="col-md-12">
 
                 <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Table</span>
+                    <div class="card-header d-flex justify-content-between">
+                        <span class="card-title">{{ __('Nueva tabla') }}</span>
+                        <a class="btn btn-primary btn-sm" href="{{ Auth::user()->id == $table->user_id ? route('tables.index') : route('shared.index') }}"><i class="bi bi-arrow-90deg-left"></i></a>
                     </div>
                     <div class="card-body bg-white">
                         <form method="POST" action="{{ route('tables.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
+
+                            <input type="hidden" name="user_id" class="form-control" value="{{ Auth::user()->id }}" id="user_id" placeholder="User Id">
 
                             @include('table.form')
 

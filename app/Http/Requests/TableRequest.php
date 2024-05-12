@@ -22,9 +22,9 @@ class TableRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'user_id' => 'required',
+			'user_id' => 'integer',
 			'Name' => 'required|string',
-			'Description' => 'required|string',
+			'Description' => 'nullable|max:255',
         ];
     }
 }

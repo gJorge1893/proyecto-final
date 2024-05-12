@@ -10,11 +10,12 @@
             <div class="col-md-12">
 
                 <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Shared</span>
+                    <div class="card-header d-flex justify-content-between">
+                        <span class="card-title">{{ __('Compartir con') }}</span>
+                        <a class="btn btn-primary btn-sm" href="{{ route('tables.show', $id) }}"><i class="bi bi-arrow-90deg-left"></i></a>
                     </div>
                     <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('shareds.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('shared.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
                             @include('shared.form')

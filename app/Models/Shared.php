@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Shared
@@ -14,7 +13,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $permission_id
  * @property $created_at
  * @property $updated_at
- * @property $deleted_at
  *
  * @property Permission $permission
  * @property Table $table
@@ -24,8 +22,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Shared extends Model
 {
-    use SoftDeletes;
-
     protected $perPage = 20;
 
     /**
