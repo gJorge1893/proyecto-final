@@ -2,10 +2,10 @@
     <table class="table table-striped table-hover">
         <thead class="thead">
             <tr>
-            <th >{{ _( 'Nombre' ) }}</th>
-            <th >{{ _( 'Descripción' ) }}</th>
-            <th >{{ _( 'Fecha' ) }}</th>
-            <th >{{ _( 'Tipo' ) }}</th>
+            <th >{{ __( 'Nombre' ) }}</th>
+            <th >{{ __( 'Descripción' ) }}</th>
+            <th >{{ __( 'Fecha' ) }}</th>
+            <th >{{ __( 'Tipo' ) }}</th>
 
                 <th></th>
             </tr>
