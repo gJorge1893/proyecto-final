@@ -73,7 +73,7 @@ class TableController extends Controller
     {
         $table->update($request->validated());
 
-        return Redirect::route('tables.index')
+        return Redirect::route('tables.show', $table->id)
             ->with('success', 'Tabla actualizada con éxito.');
     }
 

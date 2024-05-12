@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Shared;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\SharedRequest;
+use App\Models\Permission;
+use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -16,7 +19,9 @@ class SharedController extends Controller
      */
     public function index(Request $request): View
     {
-        $shareds = Shared::paginate();
+        $shareds = Shared::where('user_id', Auth::user()->id)->paginate(5);
+
+        // dd($shareds);
 
         return view('shared.index', compact('shareds'))
             ->with('i', ($request->input('page', 1) - 1) * $shareds->perPage());
@@ -25,11 +30,18 @@ class SharedController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create(Request $request): View
     {
+        // dd($request);
         $shared = new Shared();
 
-        return view('shared.create', compact('shared'));
+        $users = User::where('id', '!=', Auth::user()->id)->get();
+
+        $permissions = Permission::all();
+
+        $id = $request->query('id');
+
+        return view('shared.create', compact('shared', 'id', 'users', 'permissions'));
     }
 
     /**
@@ -38,9 +50,8 @@ class SharedController extends Controller
     public function store(SharedRequest $request): RedirectResponse
     {
         Shared::create($request->validated());
-
-        return Redirect::route('shareds.index')
-            ->with('success', 'Shared created successfully.');
+        return Redirect::route('tables.show', $request->table_id)
+            ->with('success', 'Tabla compartida con ' . User::find($request->user_id)->name . '.');
     }
 
     /**
@@ -56,11 +67,15 @@ class SharedController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id): View
+    public function edit($id, Request $request): View
     {
         $shared = Shared::find($id);
 
-        return view('shared.edit', compact('shared'));
+        $users = User::all();
+
+        $permissions = Permission::all();
+
+        return view('shared.edit', compact('shared', 'users', 'permissions'));
     }
 
     /**
@@ -70,15 +85,15 @@ class SharedController extends Controller
     {
         $shared->update($request->validated());
 
-        return Redirect::route('shareds.index')
-            ->with('success', 'Shared updated successfully');
+        return Redirect::route('tables.show', $shared->table_id)
+            ->with('success', 'Permisos actualizados con éxito.');
     }
 
     public function destroy($id): RedirectResponse
     {
         Shared::find($id)->delete();
 
-        return Redirect::route('shareds.index')
+        return Redirect::route('shared.index')
             ->with('success', 'Shared deleted successfully');
     }
 }

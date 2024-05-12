@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('template_title')
-    {{ __('Create') }} Expense
+@section('title')
+    {{ __('Nuevo registro') }}
 @endsection
 
 @section('content')
@@ -10,12 +10,12 @@
             <div class="col-md-12">
 
                 <div class="card card-default">
-                    <div class="card-header">
-                        <div class="float-left">
+                    <div class="card-header d-flex justify-content-between">
+                        <div>
                             <span class="card-title">{{ __('Crear nuevo gasto') }}</span>
                         </div>
-                        <div class="float-right">
-                            {{-- <a class="btn btn-primary btn-sm" href="{{ route('tables.show', ['table' => $expense->table_id]) }}"> {{ __('Volver') }}</a> --}}
+                        <div>
+                            <a class="btn btn-primary btn-sm" href="{{ route('tables.show', $id) }}"><i class="bi bi-arrow-90deg-left"></i></a>
                         </div>
                     </div>
                     <div class="card-body bg-white">

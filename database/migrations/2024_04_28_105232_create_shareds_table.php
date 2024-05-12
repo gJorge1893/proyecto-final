@@ -32,7 +32,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->timestamps();
-            $table->softDeletes();
+            $table->unique(['table_id', 'user_id']);
         });
     }
 

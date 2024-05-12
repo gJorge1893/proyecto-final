@@ -10,7 +10,7 @@ use App\Http\Controllers\TableController;
 use App\Models\User;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/google-auth/redirect', function () {

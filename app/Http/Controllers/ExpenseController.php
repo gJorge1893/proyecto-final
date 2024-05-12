@@ -17,9 +17,7 @@ class ExpenseController extends Controller
     public function index(Request $request): View
     {
         $expenses = Expense::paginate();
-
-        // dd($expenses->toArray());
-
+        
         return view('expense.index', compact('expenses'))
             ->with('i', ($request->input('page', 1) - 1) * $expenses->perPage());
     }

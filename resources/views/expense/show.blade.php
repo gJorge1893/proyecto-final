@@ -14,7 +14,7 @@
                             <span class="card-title">{{ __('Detalles de: ' . $expense->item) }} Expense</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('tables.show', ['table' => $expense->table_id]) }}"> {{ __('Volver') }}</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('tables.show', ['table' => $expense->table_id]) }}"><i class="bi bi-arrow-90deg-left"></i></a>
                         </div>
                     </div>
 
@@ -65,13 +65,15 @@
                 </div>
             </div>
         </div>
-        <div class="mt-4 d-flex justify-content-center">
-            <form action="{{ route('expenses.destroy', $expense) }}" method="POST">
-                <a class="btn btn-sm btn-success" href="{{ route('expenses.edit', $expense->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
-            </form>
-        </div>
+        @if (Auth::user()->id == $expense->table->user_id || $expense->table->shareds->where('user_id', Auth::user()->id)->where('permission_id', 2)->first())
+            <div class="mt-4 d-flex justify-content-center">
+                <form action="{{ route('expenses.destroy', $expense) }}" method="POST">
+                    <a class="btn btn-sm btn-success" href="{{ route('expenses.edit', $expense->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
+                </form>
+            </div>
+        @endif
     </section>
 @endsection

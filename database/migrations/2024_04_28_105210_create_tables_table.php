@@ -20,7 +20,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('Name', 100);
-            $table->string('Description', 255);
+            $table->string('Description', 255)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
