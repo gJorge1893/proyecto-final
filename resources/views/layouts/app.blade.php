@@ -22,6 +22,8 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 </head>
 <body>
     <div id="app">
@@ -91,6 +93,7 @@
         <main class="py-4 w-75 mx-auto">
             @yield('content')
         </main>
+        <script src="{{ mix('app.js') }}""></script>
     </div>
 </body>
 </html>
