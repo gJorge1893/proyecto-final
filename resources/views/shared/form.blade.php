@@ -13,11 +13,11 @@
                         @endif
                         @endforeach
                     @else
-                        @if($shared->where($shared->table_id)->where($shared->user_id)->first())
-                            <option value="{{ $user->id }}" {{ old('user_id', $shared?->user_id) == $user->id ? 'selected' : '' }}>
-                                {{ $user->name }}
+                        {{-- @if($shared->where($shared->table_id)->where($shared->user_id)->first()) --}}
+                            <option value="{{ $shared->user->id }}" {{ old('user_id', $shared?->user_id) == $shared->user->id ? 'selected' : '' }}>
+                                {{ $shared->user->name }}
                             </option>
-                        @endif
+                        {{-- @endif --}}
                     @endif
             </select>
             {!! $errors->first('user_id', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}

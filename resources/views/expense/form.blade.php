@@ -1,5 +1,5 @@
 <div class="row padding-1 p-1">        
-        <input type="text" name="table_id" class="form-control @error('table_id') is-invalid @enderror" value="{{ old('table_id', $expense?->table_id ?? $id) }}" id="table_id" placeholder="Table Id">
+        <input type="hidden" name="table_id" class="form-control @error('table_id') is-invalid @enderror" value="{{ old('table_id', $expense?->table_id ?? $id) }}" id="table_id" placeholder="Table Id">
         <div class="form-group mb-2 mb20 col-sm-12 col-md-6">
             <label for="item" class="form-label">{{ __('Nombre') }}</label>
             <input type="text" name="item" class="form-control @error('item') is-invalid @enderror" value="{{ old('item', $expense?->item) }}" id="item" placeholder="Nombre" autofocus>
@@ -13,7 +13,7 @@
         <hr class="mt-4" />
         <div class="form-group mb-2 mb20 col-sm-12 col-md-4">
             <label for="date" class="form-label">{{ __('Fecha') }}</label>
-            <input type="date" name="date" class="form-control @error('date') is-invalid @enderror" value="{{ old('date', $expense?->date) }}" id="date" placeholder="Fecha">
+            <input type="date" name="date" class="form-control @error('date') is-invalid @enderror" value="{{ old('date', $expense?->date ?? now()->format('Y-m-d')) }}" id="date" placeholder="Fecha">
             {!! $errors->first('date', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20 col-sm-12 col-md-4">
