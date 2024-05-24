@@ -6,6 +6,12 @@
 
 @section('content')
     <div class="container-fluid">
+        @if (session('error'))
+            <div class="alert alert-danger m-4">
+                <p>{{ session('error') }}</p>
+            </div>
+            
+        @endif
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
@@ -30,6 +36,7 @@
                     @endif
                     <div class="card-body bg-white">
                         <div class="row">
+
                             @foreach ($tables as $table)
                                 <div class="col-sm-12 col-md-4 mt-2">
                                     <div class="card d-flex">
@@ -47,7 +54,7 @@
                                                     <a class="btn btn-sm btn-success" href="{{ route('tables.edit', $table->id) }}"><i class="fa fa-fw fa-edit"></i></a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="event.preventDefault(); confirm('Are you sure to delete?') ? this.closest('form').submit() : false;"><i class="fa fa-fw fa-trash"></i></button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i></button>
                                                 </form>
                                             </div>
                                         </div>

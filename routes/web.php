@@ -53,4 +53,6 @@ Route::resources([
     'shared' => SharedController::class,
 ]);
 
+Route::get('tables/{id}/pdf', [TableController::class, 'pdfData'])->name('tables.pdf');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
