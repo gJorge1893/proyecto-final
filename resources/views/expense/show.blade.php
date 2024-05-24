@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Detalles de: ' . $expense->item) }} Expense</span>
+                            <span class="card-title">{{ __('Detalles de: ' . $expense->item) . __('.') }} </span>
                         </div>
                         <div class="float-right">
                             <a class="btn btn-primary btn-sm" href="{{ route('tables.show', ['table' => $expense->table_id]) }}"><i class="bi bi-arrow-90deg-left"></i></a>
@@ -20,18 +20,12 @@
 
                     <div class="card-body bg-white">
                         
-                        <div class="form-group mb-2 mb20">
-                            <strong>Table Id:</strong>
-                            {{ $expense->table_id }}
-                        </div>
-                        {{-- <div class="form-group mb-2 mb20">
-                            <strong>Nombre:</strong>
-                            {{ $expense->item . __('.') }}
-                        </div> --}}
-                        <div class="form-group mb-2 mb20">
-                            <strong>Descripción:</strong>
-                            {{ $expense->description . __('.') }}
-                        </div>
+                        @if (strlen($expense->description) > 0)
+                            <div class="form-group mb-2 mb20">
+                                <strong>Descripción:</strong>
+                                {{ $expense->description . __('.') }}
+                            </div>
+                        @endif
                         <div class="form-group mb-2 mb20">
                             <strong>Fecha:</strong>
                             {{ $expense->date . __('.') }}

@@ -8,6 +8,26 @@
 
 .icon-size {
   font-size: 25px;
+  cursor: pointer;
+}
+
+.button-effect {
+  transition: all .5s ease-in-out;
+}
+
+.button-effect:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.select-effect {
+  transition: all .5s ease-in-out;
+}
+
+.select-effect:hover {
+  transform: scale(.99);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 500px;
 }
 
 .x-center {
@@ -15,4 +35,17 @@
   display: block;
   margin: 0 auto;
   font-weight: bold;
+}
+
+.pdf-page-header{
+  font-size: xx-small;
+}
+
+.primary-color {
+  color: #007bff;
+}
+
+.main-logo {
+  height: 50px;
+  width: 125px;
 }

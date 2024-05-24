@@ -5,7 +5,7 @@
             <th >{{ __( 'Nombre' ) }}</th>
             <th >{{ __( 'Descripción' ) }}</th>
             <th >{{ __( 'Fecha' ) }}</th>
-            <th >{{ __( 'Tipo' ) }}</th>
+            <th >{{ __( 'Precio' ) }}</th>
 
                 <th></th>
             </tr>
@@ -16,8 +16,8 @@
                     
                 <td >{{ $expense->item }}</td>
                 <td >{{ $expense->description }}</td>
-                <td >{{ $expense->date }}</td>
-                <td >{{ $expense->type }}</td>
+                <td>{{ \Carbon\Carbon::parse($expense->date)->format('d-m-Y') }}</td>
+                <td>{{ number_format($expense->price, 2, ',', '.') . __('€') }} </td>
 
                     <td>
                         <form action="{{ route('expenses.destroy', $expense) }}" method="POST">

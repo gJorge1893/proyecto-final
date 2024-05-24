@@ -2,7 +2,8 @@
         
         <input type="hidden" name="table_id" class="form-control @error('table_id') is-invalid @enderror" value="{{ old('table_id', $shared?->table_id ?? $id) }}" id="table_id" placeholder="Table Id">
         <div class="form-group mb-2 mb20 col-sm-12 col-md-6">
-            <label for="user_id" class="form-label">{{ __('User Id') }}</label>
+            @if (Request::is('*create*'))
+            <label for="user_id" class="form-label">{{ __('Compartir con') }}</label>
             <select name="user_id" id="user_id" class="form-control @error('user_id') is-invalid @enderror">
                     @if (Request::is('*create*'))
                         @foreach($users as $user)
@@ -13,17 +14,20 @@
                         @endif
                         @endforeach
                     @else
-                        {{-- @if($shared->where($shared->table_id)->where($shared->user_id)->first()) --}}
-                            <option value="{{ $shared->user->id }}" {{ old('user_id', $shared?->user_id) == $shared->user->id ? 'selected' : '' }}>
-                                {{ $shared->user->name }}
-                            </option>
-                        {{-- @endif --}}
+                        <option value="{{ $shared->user->id }}" {{ old('user_id', $shared?->user_id) == $shared->user->id ? 'selected' : '' }}>
+                            {{ $shared->user->name }}
+                        </option>
                     @endif
             </select>
             {!! $errors->first('user_id', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
+            @else
+                <label for="user_id" class="form-label">{{ __('Compartir con') }}</label>
+                <input type="text" class="form-control" value="{{ $shared->user->name }}" disabled>
+                <input type="hidden" name="user_id" value="{{ $shared->user->id }}">
+            @endif
         </div>
         <div class="form-group mb-2 mb20 col-sm-12 col-md-6">
-            <label for="permission_id" class="form-label">{{ __('Permission Id') }}</label>
+            <label for="permission_id" class="form-label">{{ __('Permisos') }}</label>
             <select name="permission_id" class="form-control @error('permission_id') is-invalid @enderror" id="permission_id">
                 @foreach($permissions as $permission)
                     <option value="{{ $permission->id }}" {{ old('permission_id', $shared?->permission_id) == $permission->id ? 'selected' : '' }}>
@@ -36,13 +40,5 @@
 
     <div class="col-md-12 mt20 mt-2  d-flex justify-content-center gap-3">
         <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
-        <a class="btn btn-primary" href="{{ route('tables.show', $shared->table_id ?? $id) }}"> {{ __('Volver') }}</a>
-        @if ($shared->id)
-            <form action="{{ route('shared.destroy', $shared->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger btn-sm" onclick="event.preventDefault(); confirm('Are you sure to delete?') ? this.closest('form').submit() : false;"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
-            </form>
-        @endif
     </div>
 </div>

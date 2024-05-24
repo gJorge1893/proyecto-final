@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TableRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+// use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Log;
 
 class TableController extends Controller
 {
@@ -21,6 +24,7 @@ class TableController extends Controller
 
         return view('table.index', compact('tables'))
             ->with('i', ($request->input('page', 1) - 1) * $tables->perPage());
+
     }
 
     /**
@@ -38,22 +42,44 @@ class TableController extends Controller
      */
     public function store(TableRequest $request): RedirectResponse
     {
-        Table::create($request->validated());
+        try {
+            Table::create($request->validated());
+    
+            return Redirect::route('tables.index')
+                ->with('success', 'Tabla creada con éxito.');
 
-        return Redirect::route('tables.index')
-            ->with('success', 'Tabla creada con éxito.');
+        } catch (\Exception $e) {
+            Log::error('Error al crear la tabla: ' . $e->getMessage());
+
+            return Redirect::route('tables.index')
+                ->with('error', 'Error al crear la tabla.');
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id): View
+    public function show($id, Request $request): View
     {
         $table = Table::find($id);
 
-        $expenses = $table->expenses()->paginate(2);
+        if ($table  == null) {
+            $tables = Table::where('user_id', Auth::user()->id)->paginate(5);
+            return view('table.index', compact('tables'))
+                ->with('error', 'Tabla no encontrada.');
+        }
+
+        if($request->get('type')){
+            $expenses = $table->expenses()->where('table_id', $id)->where('type', $request->get('type'))->paginate();
+        } else if ($request->get('price')) {
+            $expenses = $table->expenses()->where('table_id', $id)->orderBy('price', $request->get('price'))->paginate();
+        } else {
+            $expenses = $table->expenses()->where('table_id', $id)->paginate(3);
+        }
 
         return view('table.show', compact('table', 'expenses'));
+
+        
     }
 
     /**
@@ -83,5 +109,41 @@ class TableController extends Controller
 
         return Redirect::route('tables.index')
             ->with('success', 'Tabla eliminada con éxito.');
+    }
+
+    public function pdfData($id, Request $request)
+    {
+        $table = Table::find($id);
+        $expenses = [];
+
+        if($request->get('type')){
+            $expenses = $table->expenses()->where('table_id', $id)->where('type', $request->get('type'))->get();
+        } else if ($request->get('price')) {
+            $expenses = $table->expenses()->where('table_id', $id)->orderBy('price', $request->get('price'))->get();
+        } else {
+            $expenses = $table->expenses()->where('table_id', $id)->get();
+        }
+
+        return $this->pdfGenerator($id, $expenses);
+
+    }
+
+    public function pdfGenerator($id, $expenses)
+    {
+        $table = Table::find($id);
+
+        $data = [
+            'title' => $table->Name,
+            'description' => $table->Description,
+            'date' => date('d/m/Y'),
+            'time' => date('H:i:s'),
+            'expenses' => $expenses
+        ];
+
+        $pdf = PDF::loadView('table.pdfGenerator', $data);
+
+        date_default_timezone_set('Europe/Madrid');
+        return $pdf->download($table->Name . '-' . date('d-m-Y-H:i') . '.pdf');
+
     }
 }
