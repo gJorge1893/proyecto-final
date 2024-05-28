@@ -16,7 +16,7 @@ class ExpenseController extends Controller
      */
     public function index(Request $request): View
     {
-        $expenses = Expense::paginate();
+        $expenses = Expense::paginate(20);
         
         return view('expense.index', compact('expenses'))
             ->with('i', ($request->input('page', 1) - 1) * $expenses->perPage());
@@ -39,7 +39,7 @@ class ExpenseController extends Controller
      */
     public function store(ExpenseRequest $request): RedirectResponse
     {
-        Expense::create($request->validated());
+        Expense::create($request->validated(), $request->messages());
 
         return Redirect::route('tables.show', $request->table_id)
             ->with('success', 'Registro añadido con éxito.');
@@ -52,6 +52,8 @@ class ExpenseController extends Controller
     {
         $expense = Expense::find($id);
 
+        if(!$expense) return Redirect::route('tables.index')->with('error', 'Registro no encontrado.');
+
         return view('expense.show', compact('expense'));
     }
 
@@ -62,6 +64,8 @@ class ExpenseController extends Controller
     {
         $expense = Expense::find($id);
 
+        if(!$expense) return Redirect::route('tables.index')->with('error', 'Registro no encontrado.');
+
         return view('expense.edit', compact('expense'));
     }
 
@@ -70,7 +74,7 @@ class ExpenseController extends Controller
      */
     public function update(ExpenseRequest $request, Expense $expense): RedirectResponse
     {
-        $expense->update($request->validated());
+        $expense->update($request->validated(), $request->messages());
 
         return Redirect::route('tables.show', $request->table_id)
             ->with('success', 'Registro actualizado con éxito.');
@@ -78,6 +82,8 @@ class ExpenseController extends Controller
 
     public function destroy(Expense $expense): RedirectResponse
     {
+        if(!Expense::find($expense->id)) return Redirect::route('tables.index')->with('error', 'Registro no encontrado.');
+
         Expense::find($expense->id)->delete();
 
         return Redirect::route('tables.show', $expense->table_id)

@@ -12,7 +12,7 @@
                 <div class="card card-default">
                     <div class="card-header d-flex justify-content-between">
                         <span class="card-title">{{ __('Modificar permisos') }} </span>
-                        <a class="btn btn-primary btn-sm" href="{{ route('tables.show', $shared->table_id) }}"><i class="bi bi-arrow-90deg-left"></i></a>
+                        <a class="btn btn-primary btn-sm button-effect" href="{{ route('tables.show', $shared->table_id) }}"><i class="bi bi-arrow-90deg-left"></i></a>
                     </div>
                     <div class="card-body bg-white">
                         <form method="POST" action="{{ route('shared.update', $shared->id) }}"  role="form" enctype="multipart/form-data">
@@ -26,7 +26,7 @@
                             <form action="{{ route('shared.destroy', $shared->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger mt-4" onclick="event.preventDefault(); confirm('Are you sure to delete?') ? this.closest('form').submit() : false;"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
+                                <button type="submit" class="btn btn-danger mt-4 button-effect"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
                             </form>
                         </div>
                     </div>

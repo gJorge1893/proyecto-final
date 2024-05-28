@@ -32,7 +32,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('home') }}">
+                <a class="navbar-brand text-effect" href="{{ url('home') }}">
                     {{-- {{ config('app.name', 'Laravel') }} --}}
                     <img src="{{ asset('images/logo.png') }}" alt="Logo" class="main-logo">
                 </a>
@@ -52,21 +52,21 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link text-effect" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarse') }}</a>
+                                    <a class="nav-link text-effect" href="{{ route('register') }}">{{ __('Registrarse') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('tables.index') }}">{{ __('Mis tablas') }}</a>
+                                <a class="nav-link text-effect" href="{{ route('tables.index') }}">{{ __('Mis tablas') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('shared.index') }}">{{ __('Compartidas') }}</a>
+                                <a class="nav-link text-effect" href="{{ route('shared.index') }}">{{ __('Compartidas') }}</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

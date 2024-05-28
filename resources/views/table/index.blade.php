@@ -16,15 +16,15 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="d-flex justify-content-between align-items-center">
 
                             <span id="card_title">
                                 {{ __('Mis tablas') }}
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('tables.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Nueva tabla') }}
+                                <a href="{{ route('tables.create') }}" data-placement="left">
+                                    <i class="bi bi-plus-square-fill icon-size"></i>
                                 </a>
                               </div>
                         </div>
@@ -50,11 +50,11 @@
                                             <hr />
                                             <div class="d-flex justify-content-center">
                                                 <form action="{{ route('tables.destroy', $table->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('tables.show', $table->id) }}"><i class="fa fa-fw fa-eye"></i></a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('tables.edit', $table->id) }}"><i class="fa fa-fw fa-edit"></i></a>
+                                                    <a class="btn btn-sm btn-primary button-effect" href="{{ route('tables.show', $table->id) }}"><i class="fa fa-fw fa-eye"></i></a>
+                                                    <a class="btn btn-sm btn-success button-effect" href="{{ route('tables.edit', $table->id) }}"><i class="fa fa-fw fa-edit"></i></a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i></button>
+                                                    <button type="submit" class="btn btn-danger btn-sm button-effect"><i class="fa fa-fw fa-trash"></i></button>
                                                 </form>
                                             </div>
                                         </div>
@@ -64,7 +64,9 @@
                         </div>
                     </div>
                 </div>
-                {!! $tables->withQueryString()->links() !!}
+                <div class="mt-2">
+                    {{ $tables->links('pagination::bootstrap-5') }}
+                </div>
             </div>
         </div>
     </div>

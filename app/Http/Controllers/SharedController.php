@@ -32,7 +32,6 @@ class SharedController extends Controller
      */
     public function create(Request $request): View
     {
-        // dd($request);
         $shared = new Shared();
 
         $users = User::where('id', '!=', Auth::user()->id)->get();
@@ -59,6 +58,8 @@ class SharedController extends Controller
      */
     public function show($id): View
     {
+        if (!Shared::find($id)) return Redirect::route('tables.index')->with('error', 'Tabla no encontrada.');
+
         $shared = Shared::find($id);
 
         return view('shared.show', compact('shared'));
@@ -69,6 +70,8 @@ class SharedController extends Controller
      */
     public function edit($id, Request $request): View
     {
+        if (!Shared::find($id)) return Redirect::route('tables.index')->with('error', 'Tabla no encontrada.');
+
         $shared = Shared::find($id);
 
         $users = User::all();
@@ -91,9 +94,11 @@ class SharedController extends Controller
 
     public function destroy($id): RedirectResponse
     {
+        if (!Shared::find($id)) return Redirect::route('tables.index')->with('error', 'Tabla no encontrada.');
+
         Shared::find($id)->delete();
 
-        return Redirect::route('shared.index')
-            ->with('success', 'Shared deleted successfully');
+        return Redirect::route('tables.index')
+            ->with('success', 'Usuario eliminado de la tabla.');
     }
 }
