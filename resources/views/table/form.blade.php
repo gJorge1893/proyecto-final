@@ -11,6 +11,6 @@
         </div>
 
     <div class="d-flex justify-content-center col-md-12 mt20 mt-2">
-        <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
+        <button type="submit" class="btn btn-primary button-effect">{{ __('Enviar') }}</button>
     </div>
 </div>

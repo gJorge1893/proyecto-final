@@ -34,11 +34,11 @@
                                 </div>
                             </div>
 
-                            <a href="{{ route('tables.pdf', ['id' => $table->id, 'type' => request()->get('type'), 'price' => request()->get('price')]) }}"><i class="bi bi-file-earmark-arrow-down-fill icon-size primary-color"></i></a>
+                            <a href="{{ route('tables.pdf', ['id' => $table->id, 'type' => request()->get('type'), 'price' => request()->get('price')]) }}"><i class="bi bi-file-earmark-pdf-fill icon-size primary-color"></i></a>
 
                         </div>
                         <div>
-                            <a class="btn btn-primary btn-sm" href="{{ Auth::user()->id == $table->user_id ? route('tables.index') : route('shared.index') }}"><i class="bi bi-arrow-90deg-left"></i></a>
+                            <a class="btn btn-primary btn-sm button-effect" href="{{ Auth::user()->id == $table->user_id ? route('tables.index') : route('shared.index') }}"><i class="bi bi-arrow-90deg-left"></i></a>
                         </div>
                     </div>
                     
@@ -80,7 +80,7 @@
                     @if (Auth::user()->id == $table->user_id)
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm button-effect" onclick="event.preventDefault(); confirm('Are you sure to delete?') ? this.closest('form').submit() : false;"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar tabla') }}</button>
+                    <button type="submit" class="btn btn-danger btn-sm button-effect"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar tabla') }}</button>
                     @endif
                 </form>
             </div>

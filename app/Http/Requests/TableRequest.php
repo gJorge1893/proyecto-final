@@ -27,4 +27,14 @@ class TableRequest extends FormRequest
 			'Description' => 'nullable|max:255',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'user_id.integer' => 'El ID del usuario debe ser un número entero.',
+            'Name.required' => 'El nombre es obligatorio.',
+            'Name.string' => 'El nombre debe ser una cadena de texto.',
+            'Description.max' => 'La descripción no puede tener más de 255 caracteres.',
+        ];
+    }
 }

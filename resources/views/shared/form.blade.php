@@ -39,6 +39,6 @@
         </div>
 
     <div class="col-md-12 mt20 mt-2  d-flex justify-content-center gap-3">
-        <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
+        <button type="submit" class="btn btn-primary button-effect">{{ __('Enviar') }}</button>
     </div>
 </div>

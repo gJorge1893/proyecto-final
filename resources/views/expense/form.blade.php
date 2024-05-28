@@ -18,12 +18,12 @@
         </div>
         <div class="form-group mb-2 mb20 col-sm-12 col-md-4">
             <label for="quantity" class="form-label color">{{ __('Cantidad') }}</label>
-            <input type="number" name="quantity" class="form-control @error('quantity') is-invalid @enderror" value="{{ old('quantity', $expense?->quantity) }}" id="quantity" placeholder="Cantidad">
+            <input type="number" name="quantity" class="form-control @error('quantity') is-invalid @enderror" value="{{ old('quantity', $expense?->quantity) }}" id="quantity" placeholder="1">
             {!! $errors->first('quantity', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20 col-sm-12 col-md-4">
             <label for="price" class="form-label">{{ __('Precio (unidad)') }}</label>
-            <input type="text" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price', $expense?->price) }}" id="price" placeholder="Precio">
+            <input type="text" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price', $expense?->price) }}" id="price" placeholder="17.90">
             {!! $errors->first('price', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <hr class="mt-4" />
@@ -34,7 +34,7 @@
         </div>
         <div class="form-group mb-2 mb20 col-sm-12 col-md-4">
             <label for="category" class="form-label">{{ __('Categoría') }}</label>
-            <input type="text" name="category" class="form-control @error('category') is-invalid @enderror" value="{{ old('category', $expense?->category) }}" id="category" placeholder="Categoría">
+            <input type="text" name="category" class="form-control @error('category') is-invalid @enderror" value="{{ old('category', $expense?->category) }}" id="category" placeholder="Comida">
             {!! $errors->first('category', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20 col-sm-12 col-md-4">
@@ -46,6 +46,6 @@
             {!! $errors->first('type', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
     <div class="d-flex justify-content-center col-md-12 mt20 mt-2">
-        <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
+        <button type="submit" class="btn btn-primary button-effect">{{ __('Enviar') }}</button>
     </div>
 </div>

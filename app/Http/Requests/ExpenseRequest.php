@@ -33,4 +33,21 @@ class ExpenseRequest extends FormRequest
 			'type' => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'table_id.required' => 'El ID de la tabla es obligatorio.',
+            'item.required' => 'El artículo es obligatorio.',
+            'description.max' => 'La descripción no puede tener más de 255 caracteres.',
+            'date.required' => 'La fecha es obligatoria.',
+            'date.before_or_equal' => 'La fecha no puede ser posterior a hoy.',
+            'quantity.required' => 'La cantidad es obligatoria.',
+            'price.required' => 'El precio es obligatorio.',
+            'price.regex' => 'El precio debe ser un número con hasta 7 dígitos y 2 decimales separados por un punto.',
+            'establishment.string' => 'El establecimiento debe ser una cadena de texto.',
+            'category.max' => 'La categoría no puede tener más de 100 caracteres.',
+            'type.required' => 'El tipo es obligatorio.',
+        ];
+    }
 }

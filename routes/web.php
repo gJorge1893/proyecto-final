@@ -10,7 +10,8 @@ use App\Http\Controllers\TableController;
 use App\Models\User;
 
 Route::get('/', function () {
-    return view('auth.login');
+    if (Auth::check()) return redirect('/home');
+    else return view('auth.login');
 });
 
 Route::get('/google-auth/redirect', function () {
@@ -32,10 +33,6 @@ Route::get('/google-auth/callback', function () {
     return redirect('/dashboard');
  
 });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard'); 
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

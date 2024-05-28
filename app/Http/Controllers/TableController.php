@@ -20,7 +20,7 @@ class TableController extends Controller
      */
     public function index(Request $request): View
     {
-        $tables = Table::where('user_id', Auth::user()->id)->paginate(5);
+        $tables = Table::where('user_id', Auth::user()->id)->paginate(6);
 
         return view('table.index', compact('tables'))
             ->with('i', ($request->input('page', 1) - 1) * $tables->perPage());
@@ -43,7 +43,7 @@ class TableController extends Controller
     public function store(TableRequest $request): RedirectResponse
     {
         try {
-            Table::create($request->validated());
+            Table::create($request->validated(), $request->messages());
     
             return Redirect::route('tables.index')
                 ->with('success', 'Tabla creada con éxito.');
@@ -63,18 +63,18 @@ class TableController extends Controller
     {
         $table = Table::find($id);
 
-        if ($table  == null) {
-            $tables = Table::where('user_id', Auth::user()->id)->paginate(5);
+        if (!$table) {
+            $tables = Table::where('user_id', Auth::user()->id)->paginate(6);
             return view('table.index', compact('tables'))
                 ->with('error', 'Tabla no encontrada.');
         }
 
         if($request->get('type')){
-            $expenses = $table->expenses()->where('table_id', $id)->where('type', $request->get('type'))->paginate();
+            $expenses = $table->expenses()->where('table_id', $id)->where('type', $request->get('type'))->paginate(10);
         } else if ($request->get('price')) {
-            $expenses = $table->expenses()->where('table_id', $id)->orderBy('price', $request->get('price'))->paginate();
+            $expenses = $table->expenses()->where('table_id', $id)->orderBy('price', $request->get('price'))->paginate(10);
         } else {
-            $expenses = $table->expenses()->where('table_id', $id)->paginate(3);
+            $expenses = $table->expenses()->where('table_id', $id)->paginate(10);
         }
 
         return view('table.show', compact('table', 'expenses'));
@@ -89,6 +89,12 @@ class TableController extends Controller
     {
         $table = Table::find($id);
 
+        if (!$table) {
+            $tables = Table::where('user_id', Auth::user()->id)->paginate(5);
+            return view('table.index', compact('tables'))
+                ->with('error', 'Tabla no encontrada.');
+        }
+
         return view('table.edit', compact('table'));
     }
 
@@ -97,14 +103,16 @@ class TableController extends Controller
      */
     public function update(TableRequest $request, Table $table): RedirectResponse
     {
-        $table->update($request->validated());
+        $table->update($request->validated(), $request->messages());
 
-        return Redirect::route('tables.show', $table->id)
+        return Redirect::route('tables.index')
             ->with('success', 'Tabla actualizada con éxito.');
     }
 
     public function destroy($id): RedirectResponse
     {
+        if (!Table::find($id)) return Redirect::route('tables.index')->with('error', 'Tabla no encontrada.');
+
         Table::find($id)->delete();
 
         return Redirect::route('tables.index')
@@ -113,6 +121,8 @@ class TableController extends Controller
 
     public function pdfData($id, Request $request)
     {
+        if (!Table::find($id)) return Redirect::route('tables.index')->with('error', 'Tabla no encontrada.');
+
         $table = Table::find($id);
         $expenses = [];
 
@@ -130,6 +140,8 @@ class TableController extends Controller
 
     public function pdfGenerator($id, $expenses)
     {
+        if (!Table::find($id)) return Redirect::route('tables.index')->with('error', 'Tabla no encontrada.');
+
         $table = Table::find($id);
 
         $data = [
